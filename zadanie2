@@ -1,0 +1,20 @@
+from typing import List
+
+class MealRepository:
+    def __init__(self, meals: List[Meal]):
+        self.meals = meals
+    
+    def find(self, name: str, exact_name_match: bool, price: float, price_comparison: str) -> List[Meal]:
+        if exact_name_match:
+            matching_meals = [meal for meal in self.meals if meal.name == name]
+        else:
+            matching_meals = [meal for meal in self.meals if meal.name.startswith(name)]
+        
+        if price_comparison == 'greater':
+            matching_meals = [meal for meal in matching_meals if meal.price > price]
+        elif price_comparison == 'less':
+            matching_meals = [meal for meal in matching_meals if meal.price < price]
+        elif price_comparison == 'equal':
+            matching_meals = [meal for meal in matching_meals if meal.price == price]
+        
+        return matching_meals
